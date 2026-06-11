@@ -495,8 +495,16 @@ export interface SettingsState
   setGeminiApiKey: (key: string) => void;
   setGroqApiKey: (key: string) => void;
   setMistralApiKey: (key: string) => void;
+  setCortiClientId: (key: string) => void;
+  setCortiClientSecret: (key: string) => void;
   setCustomTranscriptionApiKey: (key: string) => void;
   setCleanupCustomApiKey: (key: string) => void;
+
+  // Corti (BYOK)
+  cortiEnvironment: string;
+  cortiTenant: string;
+  setCortiEnvironment: (value: string) => void;
+  setCortiTenant: (value: string) => void;
 
   // Enterprise providers
   bedrockAuthMode: string;
@@ -623,6 +631,8 @@ const SECRET_IPC_SAVERS = {
   gemini: "saveGeminiKey",
   groq: "saveGroqKey",
   mistral: "saveMistralKey",
+  cortiClientId: "saveCortiClientId",
+  cortiClientSecret: "saveCortiClientSecret",
   customTranscription: "saveCustomTranscriptionKey",
   cleanupCustom: "saveCleanupCustomKey",
   bedrockAccessKeyId: "saveBedrockAccessKeyId",
@@ -660,6 +670,8 @@ const STALE_SECRET_LOCALSTORAGE_KEYS = [
   "geminiApiKey",
   "groqApiKey",
   "mistralApiKey",
+  "cortiClientId",
+  "cortiClientSecret",
   "customTranscriptionApiKey",
   "customReasoningApiKey",
   "cleanupCustomApiKey",
@@ -712,6 +724,8 @@ export const useSettingsStore = create<SettingsState>()((set, get) => ({
   cloudTranscriptionMode: readString("cloudTranscriptionMode", "openwhispr"),
   cleanupCloudMode: readString("cleanupCloudMode", "openwhispr"),
   cleanupCloudBaseUrl: readString("cleanupCloudBaseUrl", API_ENDPOINTS.OPENAI_BASE),
+  cortiEnvironment: readString("cortiEnvironment", "us"),
+  cortiTenant: readString("cortiTenant", "base"),
   customDictionary: readStringArray("customDictionary", []),
   assemblyAiStreaming: readBoolean("assemblyAiStreaming", true),
 
@@ -727,6 +741,8 @@ export const useSettingsStore = create<SettingsState>()((set, get) => ({
   geminiApiKey: "",
   groqApiKey: "",
   mistralApiKey: "",
+  cortiClientId: "",
+  cortiClientSecret: "",
   customTranscriptionApiKey: "",
   cleanupCustomApiKey: "",
 
@@ -1079,6 +1095,18 @@ export const useSettingsStore = create<SettingsState>()((set, get) => ({
     debouncedSaveSecret("mistral", key);
     invalidateApiKeyCaches("mistral");
   },
+  setCortiClientId: (key: string) => {
+    set({ cortiClientId: key });
+    debouncedSaveSecret("cortiClientId", key);
+    invalidateApiKeyCaches();
+  },
+  setCortiClientSecret: (key: string) => {
+    set({ cortiClientSecret: key });
+    debouncedSaveSecret("cortiClientSecret", key);
+    invalidateApiKeyCaches();
+  },
+  setCortiEnvironment: createStringSetter("cortiEnvironment"),
+  setCortiTenant: createStringSetter("cortiTenant"),
   setCustomTranscriptionApiKey: (key: string) => {
     set({ customTranscriptionApiKey: key });
     debouncedSaveSecret("customTranscription", key);
@@ -1459,6 +1487,8 @@ export const useSettingsStore = create<SettingsState>()((set, get) => ({
     if (keys.geminiApiKey !== undefined) s.setGeminiApiKey(keys.geminiApiKey);
     if (keys.groqApiKey !== undefined) s.setGroqApiKey(keys.groqApiKey);
     if (keys.mistralApiKey !== undefined) s.setMistralApiKey(keys.mistralApiKey);
+    if (keys.cortiClientId !== undefined) s.setCortiClientId(keys.cortiClientId);
+    if (keys.cortiClientSecret !== undefined) s.setCortiClientSecret(keys.cortiClientSecret);
     if (keys.customTranscriptionApiKey !== undefined)
       s.setCustomTranscriptionApiKey(keys.customTranscriptionApiKey);
     if (keys.cleanupCustomApiKey !== undefined) s.setCleanupCustomApiKey(keys.cleanupCustomApiKey);
@@ -1665,6 +1695,8 @@ export async function initializeSettings(): Promise<void> {
         gemini,
         groq,
         mistral,
+        cortiClientId,
+        cortiClientSecret,
         customTx,
         customRx,
         bedrockAccessKeyId,
@@ -1678,6 +1710,8 @@ export async function initializeSettings(): Promise<void> {
         window.electronAPI.getGeminiKey?.(),
         window.electronAPI.getGroqKey?.(),
         window.electronAPI.getMistralKey?.(),
+        window.electronAPI.getCortiClientId?.(),
+        window.electronAPI.getCortiClientSecret?.(),
         window.electronAPI.getCustomTranscriptionKey?.(),
         window.electronAPI.getCleanupCustomKey?.(),
         window.electronAPI.getBedrockAccessKeyId?.(),
@@ -1693,6 +1727,8 @@ export async function initializeSettings(): Promise<void> {
         geminiApiKey: gemini || "",
         groqApiKey: groq || "",
         mistralApiKey: mistral || "",
+        cortiClientId: cortiClientId || "",
+        cortiClientSecret: cortiClientSecret || "",
         customTranscriptionApiKey: customTx || "",
         cleanupCustomApiKey: customRx || "",
         bedrockAccessKeyId: bedrockAccessKeyId || "",

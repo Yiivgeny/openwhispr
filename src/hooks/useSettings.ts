@@ -61,6 +61,8 @@ export interface ApiKeySettings {
   geminiApiKey: string;
   groqApiKey: string;
   mistralApiKey: string;
+  cortiClientId: string;
+  cortiClientSecret: string;
   customTranscriptionApiKey: string;
   cleanupCustomApiKey: string;
 }
