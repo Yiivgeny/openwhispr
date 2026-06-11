@@ -32,6 +32,9 @@ export default function UseCaseStep({
       </div>
 
       <div className="space-y-1.5">
+        <p className="text-xs font-medium text-muted-foreground">
+          {t("onboarding.useCase.selectHint")}
+        </p>
         {USE_CASE_OPTIONS.map(({ id, icon }) => (
           <OptionCard
             key={id}

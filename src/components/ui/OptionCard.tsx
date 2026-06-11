@@ -52,7 +52,7 @@ export default function OptionCard({
 
         <div
           className={cn(
-            "w-4 h-4 rounded-full border flex items-center justify-center shrink-0 transition-colors duration-150",
+            "w-4 h-4 rounded-sm border flex items-center justify-center shrink-0 transition-colors duration-150",
             selected ? "bg-primary border-primary" : "border-border-hover bg-transparent"
           )}
         >

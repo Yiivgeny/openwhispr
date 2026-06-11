@@ -241,9 +241,9 @@
           "title": "会議のメモと要約",
           "description": "会議を録音・文字起こし・要約"
         },
-        "medical": {
-          "title": "医療文字起こし",
-          "description": "臨床ディクテーションとドキュメンテーション"
+        "healthcare": {
+          "title": "医療・臨床・セラピーの文字起こし",
+          "description": "患者メモ、セッション記録、レポートを音声入力"
         },
         "translation": {
           "title": "言語の翻訳",
@@ -253,7 +253,8 @@
           "title": "AI との対話",
           "description": "ChatGPT、Claude などのエージェントを声で操作"
         }
-      }
+      },
+      "selectHint": "当てはまるものをすべて選択してください"
     },
     "meeting": {
       "title": "会議メモ",
@@ -270,7 +271,7 @@
       "openSettings": "設定を開く",
       "skipForNow": "今はスキップ",
       "corti": {
-        "title": "医療文字起こしを選択されました",
+        "title": "医療系の文字起こしを選択されました",
         "description": "私たちは Corti と提携しています — 医療ディクテーションで最高精度の臨床グレード音声認識です。",
         "credit": "Corti アカウントを作成すると 50 ドル分の無料クレジットがもらえます。その後、設定で Corti の認証情報を追加すると、OpenWhispr は Corti 経由で文字起こしを行います。",
         "createAccount": "Corti アカウントを作成",

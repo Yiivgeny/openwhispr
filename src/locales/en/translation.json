@@ -241,9 +241,9 @@
           "title": "Meeting notes & summaries",
           "description": "Record, transcribe and summarize meetings"
         },
-        "medical": {
-          "title": "Medical transcription",
-          "description": "Clinical dictation and documentation"
+        "healthcare": {
+          "title": "Medical, clinical & therapy transcription",
+          "description": "Dictate patient notes, session notes and reports"
         },
         "translation": {
           "title": "Translating languages",
@@ -253,7 +253,8 @@
           "title": "Talking to my AI",
           "description": "Voice-drive ChatGPT, Claude and other agents"
         }
-      }
+      },
+      "selectHint": "Select all that apply"
     },
     "meeting": {
       "title": "Meeting notes",
@@ -270,7 +271,7 @@
       "openSettings": "Open Settings",
       "skipForNow": "Skip for now",
       "corti": {
-        "title": "You chose medical transcription",
+        "title": "You chose healthcare transcription",
         "description": "We've partnered with Corti — clinical-grade speech-to-text with the highest accuracy on medical dictation benchmarks.",
         "credit": "Create a Corti account and you'll get $50 in free credits. Then add your Corti credentials in Settings and OpenWhispr will transcribe through Corti.",
         "createAccount": "Create your Corti account",

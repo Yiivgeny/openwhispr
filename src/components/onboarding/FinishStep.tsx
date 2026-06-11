@@ -23,10 +23,10 @@ export default function FinishStep({
   const { t } = useTranslation();
 
   // The Corti pitch only renders once the Corti provider ships in the model
-  // registry (separate PR) — until then medical users see the default finish.
+  // registry (separate PR) — until then healthcare users see the default finish.
   const cortiAvailable = getTranscriptionProviders().some((p) => p.id === "corti");
   const [showCorti, setShowCorti] = useState(
-    cortiAvailable && useCases.includes(USE_CASE_IDS.medical)
+    cortiAvailable && useCases.includes(USE_CASE_IDS.healthcare)
   );
 
   if (showCorti) {

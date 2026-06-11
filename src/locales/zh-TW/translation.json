@@ -241,9 +241,9 @@
           "title": "會議筆記與摘要",
           "description": "錄製、轉寫並總結會議"
         },
-        "medical": {
-          "title": "醫療轉寫",
-          "description": "臨床口述與病歷文件"
+        "healthcare": {
+          "title": "醫療、臨床與治療轉寫",
+          "description": "口述病歷、諮商紀錄和報告"
         },
         "translation": {
           "title": "語言翻譯",
@@ -253,7 +253,8 @@
           "title": "與我的 AI 對話",
           "description": "用語音驅動 ChatGPT、Claude 等代理"
         }
-      }
+      },
+      "selectHint": "可複選"
     },
     "meeting": {
       "title": "會議筆記",
@@ -270,7 +271,7 @@
       "openSettings": "開啟設定",
       "skipForNow": "暫時略過",
       "corti": {
-        "title": "你選擇了醫療轉寫",
+        "title": "你選擇了醫療健康轉寫",
         "description": "我們與 Corti 合作 — 臨床級語音轉文字，在醫療口述基準中準確率最高。",
         "credit": "註冊 Corti 帳戶即可獲得 50 美元免費額度。然後在「設定」中加入你的 Corti 憑證，OpenWhispr 將透過 Corti 進行轉寫。",
         "createAccount": "建立你的 Corti 帳戶",

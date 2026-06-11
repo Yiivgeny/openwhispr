@@ -213,9 +213,9 @@
           "title": "Notas e resumos de reuniões",
           "description": "Grave, transcreva e resuma suas reuniões"
         },
-        "medical": {
-          "title": "Transcrição médica",
-          "description": "Ditado clínico e documentação"
+        "healthcare": {
+          "title": "Transcrição médica, clínica e terapêutica",
+          "description": "Dite notas de pacientes, notas de sessão e relatórios"
         },
         "translation": {
           "title": "Traduzir idiomas",
@@ -225,7 +225,8 @@
           "title": "Falar com minha IA",
           "description": "Controle por voz o ChatGPT, o Claude e outros agentes"
         }
-      }
+      },
+      "selectHint": "Selecione todas as opções aplicáveis"
     },
     "meeting": {
       "title": "Notas de reunião",
@@ -242,7 +243,7 @@
       "openSettings": "Abrir Configurações",
       "skipForNow": "Pular por enquanto",
       "corti": {
-        "title": "Você escolheu transcrição médica",
+        "title": "Você escolheu transcrição de saúde",
         "description": "Firmamos parceria com a Corti — voz para texto de nível clínico com a maior precisão em ditado médico.",
         "credit": "Crie uma conta Corti e ganhe US$ 50 em créditos grátis. Depois adicione suas credenciais Corti nas Configurações e o OpenWhispr transcreverá pela Corti.",
         "createAccount": "Criar sua conta Corti",

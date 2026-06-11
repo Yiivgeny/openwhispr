@@ -3,7 +3,7 @@ import { Bot, Languages, LucideIcon, PenLine, Stethoscope, Users } from "lucide-
 export const USE_CASE_IDS = {
   dictation: "dictation",
   meetings: "meetings",
-  medical: "medical",
+  healthcare: "healthcare",
   translation: "translation",
   ai: "ai",
 } as const;
@@ -18,7 +18,7 @@ export interface UseCaseOption {
 export const USE_CASE_OPTIONS: UseCaseOption[] = [
   { id: USE_CASE_IDS.dictation, icon: PenLine },
   { id: USE_CASE_IDS.meetings, icon: Users },
-  { id: USE_CASE_IDS.medical, icon: Stethoscope },
+  { id: USE_CASE_IDS.healthcare, icon: Stethoscope },
   { id: USE_CASE_IDS.translation, icon: Languages },
   { id: USE_CASE_IDS.ai, icon: Bot },
 ];
