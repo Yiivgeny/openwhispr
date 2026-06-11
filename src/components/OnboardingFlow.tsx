@@ -27,6 +27,7 @@ import { usePermissions } from "../hooks/usePermissions";
 import { useClipboard } from "../hooks/useClipboard";
 import { useSystemAudioPermission } from "../hooks/useSystemAudioPermission";
 import { useSettings } from "../hooks/useSettings";
+import { useSettingsStore } from "../stores/settingsStore";
 import LanguageSelector from "./ui/LanguageSelector";
 import AuthenticationStep from "./AuthenticationStep";
 import EmailVerificationStep from "./EmailVerificationStep";
@@ -107,6 +108,9 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     onboardingUseCaseNote,
     setOnboardingUseCaseNote,
   } = useSettings();
+
+  const cortiClientId = useSettingsStore((s) => s.cortiClientId);
+  const cortiClientSecret = useSettingsStore((s) => s.cortiClientSecret);
 
   const [hotkey, setHotkey] = useState(dictationKey || getDefaultHotkey());
   const [agentName, setAgentName] = useState("OpenWhispr");
@@ -785,6 +789,8 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             return groqApiKey.trim().length > 0;
           } else if (cloudTranscriptionProvider === "mistral") {
             return mistralApiKey.trim().length > 0;
+          } else if (cloudTranscriptionProvider === "corti") {
+            return cortiClientId.trim().length > 0 && cortiClientSecret.trim().length > 0;
           } else if (cloudTranscriptionProvider === "custom") {
             // Custom can work without API key for local endpoints
             return true;
