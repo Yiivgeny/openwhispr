@@ -101,13 +101,6 @@
     "accessibility": "Le impostazioni di accessibilità non sono disponibili su questa piattaforma.",
     "systemAudio": "Le impostazioni audio di sistema non sono disponibili su questa piattaforma."
   },
-  "titleBar": {
-    "quitTitle": "Esci da OpenWhispr",
-    "quitConfirmTitle": "Uscire da OpenWhispr?",
-    "quitConfirmDescription": "Questa operazione chiuderà OpenWhispr e interromperà i processi in background.",
-    "quit": "Esci",
-    "cancel": "Annulla"
-  },
   "upgradePrompt": {
     "paymentFailed": "Non siamo riusciti a elaborare il pagamento",
     "weeklyLimit": "Hai raggiunto il limite settimanale",

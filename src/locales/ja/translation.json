@@ -101,13 +101,6 @@
     "accessibility": "このプラットフォームではアクセシビリティ設定を利用できません。",
     "systemAudio": "システムオーディオの設定はこのプラットフォームでは利用できません。"
   },
-  "titleBar": {
-    "quitTitle": "OpenWhispr を終了",
-    "quitConfirmTitle": "OpenWhispr を終了しますか？",
-    "quitConfirmDescription": "OpenWhispr を終了し、バックグラウンドプロセスを停止します。",
-    "quit": "終了",
-    "cancel": "キャンセル"
-  },
   "upgradePrompt": {
     "paymentFailed": "お支払いを処理できませんでした",
     "weeklyLimit": "週間の利用上限に達しました",

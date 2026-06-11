@@ -101,13 +101,6 @@
     "accessibility": "此平台不支持辅助功能设置。",
     "systemAudio": "系统音频设置在此平台上不可用。"
   },
-  "titleBar": {
-    "quitTitle": "退出 OpenWhispr",
-    "quitConfirmTitle": "确定退出 OpenWhispr？",
-    "quitConfirmDescription": "这将关闭 OpenWhispr 并停止后台进程。",
-    "quit": "退出",
-    "cancel": "取消"
-  },
   "upgradePrompt": {
     "paymentFailed": "我们无法处理你的付款",
     "weeklyLimit": "你已达到本周的使用上限",

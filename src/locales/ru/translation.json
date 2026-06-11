@@ -101,13 +101,6 @@
     "accessibility": "Настройки универсального доступа недоступны на этой платформе.",
     "systemAudio": "Настройки системного аудио недоступны на этой платформе."
   },
-  "titleBar": {
-    "quitTitle": "Закрыть OpenWhispr",
-    "quitConfirmTitle": "Закрыть OpenWhispr?",
-    "quitConfirmDescription": "Это закроет OpenWhispr и остановит фоновые процессы.",
-    "quit": "Закрыть",
-    "cancel": "Отмена"
-  },
   "upgradePrompt": {
     "paymentFailed": "Не удалось обработать платёж",
     "weeklyLimit": "Вы достигли недельного лимита",

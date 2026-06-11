@@ -101,13 +101,6 @@
     "accessibility": "Accessibility settings are not available on this platform.",
     "systemAudio": "System audio settings are not available on this platform."
   },
-  "titleBar": {
-    "quitTitle": "Quit OpenWhispr",
-    "quitConfirmTitle": "Quit OpenWhispr?",
-    "quitConfirmDescription": "This will close OpenWhispr and stop background processes.",
-    "quit": "Quit",
-    "cancel": "Cancel"
-  },
   "upgradePrompt": {
     "paymentFailed": "We couldn't process your payment",
     "weeklyLimit": "You've reached your weekly limit",

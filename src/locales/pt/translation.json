@@ -1858,13 +1858,6 @@
       }
     }
   },
-  "titleBar": {
-    "quitTitle": "Sair do OpenWhispr",
-    "quitConfirmTitle": "Sair do OpenWhispr?",
-    "quitConfirmDescription": "Isso fechará o OpenWhispr e encerrará os processos em segundo plano.",
-    "quit": "Sair",
-    "cancel": "Cancelar"
-  },
   "upgradePrompt": {
     "paymentFailed": "Não foi possível processar seu pagamento",
     "weeklyLimit": "Você atingiu seu limite semanal",
