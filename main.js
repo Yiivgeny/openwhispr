@@ -840,6 +840,29 @@ async function startApp() {
     }
   }
 
+  // Set up voice agent hotkey (dictation routed straight to the dictation
+  // agent, bypassing cleanup)
+  const voiceAgentHotkeyCallback = () => {
+    windowManager.sendToggleVoiceAgent();
+  };
+  windowManager._voiceAgentHotkeyCallback = voiceAgentHotkeyCallback;
+
+  const savedVoiceAgentKey = environmentManager.getVoiceAgentKey?.() || "";
+  if (savedVoiceAgentKey) {
+    const result = await hotkeyManager.registerSlot(
+      "voiceAgent",
+      savedVoiceAgentKey,
+      voiceAgentHotkeyCallback
+    );
+    if (!result.success) {
+      debugLogger.warn(
+        "Failed to restore voice agent hotkey",
+        { hotkey: savedVoiceAgentKey },
+        "hotkey"
+      );
+    }
+  }
+
   // Set up meeting mode hotkey
   const meetingHotkeyCallback = () => {
     if (hotkeyManager.isInListeningMode()) return;
@@ -1036,11 +1059,18 @@ async function startApp() {
         }
       }
 
-      // Check agent slot for Globe/Fn key
+      // Check agent and voice agent slots for Globe/Fn key
       const agentHotkey = hotkeyManager.getSlotHotkey("agent");
-      if (agentHotkey && isGlobeLikeHotkey(agentHotkey)) {
+      const voiceAgentHotkey = hotkeyManager.getSlotHotkey("voiceAgent");
+      const agentUsesGlobe = !!agentHotkey && isGlobeLikeHotkey(agentHotkey);
+      const voiceAgentUsesGlobe = !!voiceAgentHotkey && isGlobeLikeHotkey(voiceAgentHotkey);
+      if (agentUsesGlobe) {
         windowManager.toggleAgentOverlay();
-      } else if (!isGlobeLikeHotkey(currentHotkey)) {
+      }
+      if (voiceAgentUsesGlobe) {
+        windowManager.sendToggleVoiceAgent();
+      }
+      if (!agentUsesGlobe && !voiceAgentUsesGlobe && !isGlobeLikeHotkey(currentHotkey)) {
         debugLogger?.debug("[Globe] Ignored — hotkey is not GLOBE", { currentHotkey });
       }
     });
@@ -1084,10 +1114,12 @@ async function startApp() {
     globeKeyManager.on("right-modifier-down", async (modifier) => {
       const currentHotkey = hotkeyManager.getCurrentHotkey && hotkeyManager.getCurrentHotkey();
 
-      // Check agent slot for right-modifier
-      const agentHotkey = hotkeyManager.getSlotHotkey("agent");
-      if (agentHotkey === modifier) {
+      // Check agent and voice agent slots for right-modifier
+      if (hotkeyManager.getSlotHotkey("agent") === modifier) {
         windowManager.toggleAgentOverlay();
+      }
+      if (hotkeyManager.getSlotHotkey("voiceAgent") === modifier) {
+        windowManager.sendToggleVoiceAgent();
       }
 
       if (currentHotkey !== modifier) return;
@@ -1149,8 +1181,10 @@ async function startApp() {
       const currentHotkey = hotkeyManager.getCurrentHotkey && hotkeyManager.getCurrentHotkey();
       if (isMouseButtonHotkey(currentHotkey)) buttons.push(currentHotkey);
 
-      const agentHotkey = hotkeyManager.getSlotHotkey("agent");
-      if (isMouseButtonHotkey(agentHotkey)) buttons.push(agentHotkey);
+      for (const slotName of ["agent", "voiceAgent"]) {
+        const slotHotkey = hotkeyManager.getSlotHotkey(slotName);
+        if (isMouseButtonHotkey(slotHotkey)) buttons.push(slotHotkey);
+      }
 
       globeKeyManager.setSuppressedMouseButtons(buttons);
     };
@@ -1165,10 +1199,12 @@ async function startApp() {
       if (!isMouseButtonHotkey(button)) return;
 
       const currentHotkey = hotkeyManager.getCurrentHotkey && hotkeyManager.getCurrentHotkey();
-      const agentHotkey = hotkeyManager.getSlotHotkey("agent");
 
-      if (agentHotkey === button) {
+      if (hotkeyManager.getSlotHotkey("agent") === button) {
         windowManager.toggleAgentOverlay();
+      }
+      if (hotkeyManager.getSlotHotkey("voiceAgent") === button) {
+        windowManager.sendToggleVoiceAgent();
       }
 
       if (currentHotkey !== button) return;
