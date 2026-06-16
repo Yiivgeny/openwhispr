@@ -158,7 +158,8 @@
     "unknownError": "Ocurrió un error desconocido",
     "copy": "Copiar",
     "copied": "Copiado",
-    "done": "Listo"
+    "done": "Listo",
+    "skip": "跳过"
   },
   "onboarding": {
     "steps": {
@@ -253,6 +254,10 @@
         "ai": {
           "title": "与我的 AI 对话",
           "description": "用语音驱动 ChatGPT、Claude 等智能体"
+        },
+        "upload": {
+          "title": "上传音频文件",
+          "description": "上传并转写 MP3、OGG 等"
         }
       },
       "selectHint": "可多选"

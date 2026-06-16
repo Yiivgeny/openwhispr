@@ -158,7 +158,8 @@
     "unknownError": "Une erreur inconnue s'est produite",
     "copy": "Copier",
     "copied": "Copié",
-    "done": "Terminé"
+    "done": "Terminé",
+    "skip": "Salta"
   },
   "onboarding": {
     "steps": {
@@ -253,6 +254,10 @@
         "ai": {
           "title": "Parlare con la mia IA",
           "description": "Guida con la voce ChatGPT, Claude e altri agenti"
+        },
+        "upload": {
+          "title": "Caricare file audio",
+          "description": "Carica e trascrivi MP3, OGG e altro"
         }
       },
       "selectHint": "Seleziona tutte le opzioni pertinenti"

@@ -158,7 +158,8 @@
     "unknownError": "An unknown error occurred",
     "copy": "Copy",
     "copied": "Copied",
-    "done": "Done"
+    "done": "Done",
+    "skip": "Skip"
   },
   "onboarding": {
     "steps": {
@@ -253,6 +254,10 @@
         "ai": {
           "title": "Talking to my AI",
           "description": "Voice-drive ChatGPT, Claude and other agents"
+        },
+        "upload": {
+          "title": "Uploading audio files",
+          "description": "Upload and transcribe MP3, OGG and more"
         }
       },
       "selectHint": "Select all that apply"

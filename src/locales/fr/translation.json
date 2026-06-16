@@ -158,7 +158,8 @@
     "unknownError": "Une erreur inconnue s'est produite",
     "copy": "Copier",
     "copied": "Copié",
-    "done": "Terminé"
+    "done": "Terminé",
+    "skip": "Passer"
   },
   "onboarding": {
     "steps": {
@@ -253,6 +254,10 @@
         "ai": {
           "title": "Parler à mon IA",
           "description": "Pilotez ChatGPT, Claude et d'autres agents à la voix"
+        },
+        "upload": {
+          "title": "Importer des fichiers audio",
+          "description": "Importez et transcrivez MP3, OGG et plus"
         }
       },
       "selectHint": "Sélectionnez tout ce qui s'applique"

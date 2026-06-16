@@ -158,7 +158,8 @@
     "unknownError": "Ein unbekannter Fehler ist aufgetreten",
     "copy": "Kopieren",
     "copied": "Kopiert",
-    "done": "Fertig"
+    "done": "Fertig",
+    "skip": "Пропустить"
   },
   "onboarding": {
     "steps": {
@@ -253,6 +254,10 @@
         "ai": {
           "title": "Общение с моим ИИ",
           "description": "Управляйте голосом ChatGPT, Claude и другими агентами"
+        },
+        "upload": {
+          "title": "Загрузка аудиофайлов",
+          "description": "Загружайте и расшифровывайте MP3, OGG и другие"
         }
       },
       "selectHint": "Выберите все подходящие варианты"

@@ -158,7 +158,8 @@
     "unknownError": "Ocurrió un error desconocido",
     "copy": "Copiar",
     "copied": "Copiado",
-    "done": "Listo"
+    "done": "Listo",
+    "skip": "Omitir"
   },
   "onboarding": {
     "steps": {
@@ -253,6 +254,10 @@
         "ai": {
           "title": "Hablar con mi IA",
           "description": "Controla por voz ChatGPT, Claude y otros agentes"
+        },
+        "upload": {
+          "title": "Subir archivos de audio",
+          "description": "Sube y transcribe MP3, OGG y más"
         }
       },
       "selectHint": "Selecciona todas las que correspondan"

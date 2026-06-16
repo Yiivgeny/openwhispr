@@ -158,7 +158,8 @@
     "unknownError": "Ocurrió un error desconocido",
     "copy": "Copiar",
     "copied": "Copiado",
-    "done": "Listo"
+    "done": "Listo",
+    "skip": "スキップ"
   },
   "onboarding": {
     "steps": {
@@ -253,6 +254,10 @@
         "ai": {
           "title": "AI との対話",
           "description": "ChatGPT、Claude などのエージェントを声で操作"
+        },
+        "upload": {
+          "title": "音声ファイルのアップロード",
+          "description": "MP3、OGG などをアップロードして文字起こし"
         }
       },
       "selectHint": "当てはまるものをすべて選択してください"

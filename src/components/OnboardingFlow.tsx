@@ -52,6 +52,9 @@ import { cloudPost } from "../services/cloudApi";
 // Highest possible step index across flow variants (skip-auth with meeting step).
 const MAX_STEP_INDEX = 7;
 
+// Steps whose primary action is optional — the user can advance without it.
+const SKIPPABLE_STEPS = new Set(["usecase", "voiceAgent", "meeting"]);
+
 interface OnboardingFlowProps {
   onComplete: (options?: { openSettings?: boolean }) => void;
 }
@@ -985,16 +988,26 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             {currentStep === 1 && isSignedIn && !skipAuth && <div />}
 
             <div className="flex items-center gap-2">
-              {/* The finish step renders its own actions */}
               {currentStepId !== "finish" && (
-                <Button
-                  onClick={nextStep}
-                  disabled={!canProceed()}
-                  className="h-8 px-6 rounded-full text-xs"
-                >
-                  {t("common.next")}
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </Button>
+                <>
+                  {SKIPPABLE_STEPS.has(currentStepId ?? "") && (
+                    <Button
+                      onClick={nextStep}
+                      variant="ghost"
+                      className="h-8 px-4 rounded-full text-xs text-muted-foreground"
+                    >
+                      {t("common.skip")}
+                    </Button>
+                  )}
+                  <Button
+                    onClick={nextStep}
+                    disabled={!canProceed()}
+                    className="h-8 px-6 rounded-full text-xs"
+                  >
+                    {t("common.next")}
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </Button>
+                </>
               )}
             </div>
           </div>
