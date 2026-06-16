@@ -2596,15 +2596,7 @@
     "noUpcoming": "Keine anstehenden Ereignisse",
     "meetingStarting": "Meeting beginnt jetzt",
     "today": "Heute",
-    "tomorrow": "Morgen",
-    "detection": {
-      "title": "Meeting-Erkennung",
-      "description": "Automatisch erkennen, wenn du in einem Meeting bist",
-      "processDetection": "App-Erkennung",
-      "processDescription": "Erkennen, welche App du verwendest, wenn ein Meeting erkannt wird",
-      "audioDetection": "Audio-Erkennung",
-      "audioDescription": "Benachrichtigung bei anhaltender Mikrofonaktivität"
-    }
+    "tomorrow": "Morgen"
   },
   "upcoming": {
     "title": "Anstehende Meetings",

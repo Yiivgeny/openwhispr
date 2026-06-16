@@ -771,8 +771,6 @@ export default function SettingsPage({
   const setChatAgentKey = useSettingsStore((s) => s.setChatAgentKey);
   const voiceAgentKey = useSettingsStore((s) => s.voiceAgentKey);
   const setVoiceAgentKey = useSettingsStore((s) => s.setVoiceAgentKey);
-  const meetingAudioDetection = useSettingsStore((s) => s.meetingAudioDetection);
-  const setMeetingAudioDetection = useSettingsStore((s) => s.setMeetingAudioDetection);
 
   const { t, i18n } = useTranslation();
   const { toast } = useToast();
@@ -2450,32 +2448,6 @@ export default function SettingsPage({
                       checked={notifyUpdates}
                       onChange={setNotifyUpdates}
                       disabled={!notificationsEnabled}
-                    />
-                  </SettingsRow>
-                </SettingsPanelRow>
-              </SettingsPanel>
-            </div>
-
-            {/* Meeting Detection */}
-            <div>
-              <SectionHeader
-                title={t("calendar.detection.title")}
-                description={t("calendar.detection.description")}
-              />
-              <SettingsPanel>
-                <SettingsPanelRow>
-                  <SettingsRow
-                    label={t("calendar.detection.audioDetection")}
-                    description={t("calendar.detection.audioDescription")}
-                  >
-                    <Toggle
-                      checked={meetingAudioDetection}
-                      onChange={(value) => {
-                        setMeetingAudioDetection(value);
-                        window.electronAPI?.meetingDetectionSetPreferences?.({
-                          audioDetection: value,
-                        });
-                      }}
                     />
                   </SettingsRow>
                 </SettingsPanelRow>

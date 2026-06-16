@@ -2596,15 +2596,7 @@
     "noUpcoming": "今後の予定はありません",
     "meetingStarting": "ミーティングが開始されます",
     "today": "今日",
-    "tomorrow": "明日",
-    "detection": {
-      "title": "ミーティング検出",
-      "description": "ミーティング中であることを自動的に検出する",
-      "processDetection": "アプリ検出",
-      "processDescription": "ミーティングが検出されたときに使用中のアプリを特定する",
-      "audioDetection": "オーディオ検出",
-      "audioDescription": "持続的なマイク使用が検出されたときに通知する"
-    }
+    "tomorrow": "明日"
   },
   "upcoming": {
     "title": "今後の会議",

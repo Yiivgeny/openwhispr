@@ -2591,15 +2591,7 @@
     "noUpcoming": "沒有即將到來的事件",
     "meetingStarting": "會議即將開始",
     "today": "今天",
-    "tomorrow": "明天",
-    "detection": {
-      "title": "會議偵測",
-      "description": "自動偵測您是否在會議中",
-      "processDetection": "應用偵測",
-      "processDescription": "偵測到會議時識別您正在使用的應用程式",
-      "audioDetection": "音訊偵測",
-      "audioDescription": "偵測到持續麥克風活動時提示"
-    }
+    "tomorrow": "明天"
   },
   "upcoming": {
     "title": "即將開始的會議",

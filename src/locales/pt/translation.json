@@ -2596,15 +2596,7 @@
     "noUpcoming": "Nenhum evento próximo",
     "meetingStarting": "A reunião começa agora",
     "today": "Hoje",
-    "tomorrow": "Amanhã",
-    "detection": {
-      "title": "Detecção de Reuniões",
-      "description": "Detectar automaticamente quando você está em uma reunião",
-      "processDetection": "Detecção de Aplicativos",
-      "processDescription": "Identificar qual aplicativo você está usando quando uma reunião é detectada",
-      "audioDetection": "Detecção de Áudio",
-      "audioDescription": "Notificar quando atividade prolongada do microfone for detectada"
-    }
+    "tomorrow": "Amanhã"
   },
   "upcoming": {
     "title": "Próximas reuniões",

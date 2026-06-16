@@ -2591,15 +2591,7 @@
     "noUpcoming": "没有即将到来的事件",
     "meetingStarting": "会议即将开始",
     "today": "今天",
-    "tomorrow": "明天",
-    "detection": {
-      "title": "会议检测",
-      "description": "自动检测您是否在会议中",
-      "processDetection": "应用检测",
-      "processDescription": "检测到会议时识别您正在使用的应用",
-      "audioDetection": "音频检测",
-      "audioDescription": "检测到持续麦克风活动时提示"
-    }
+    "tomorrow": "明天"
   },
   "upcoming": {
     "title": "即将开始的会议",

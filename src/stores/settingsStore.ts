@@ -119,7 +119,6 @@ const BOOLEAN_SETTINGS = new Set([
   "floatingIconAutoHide",
   "startMinimized",
   "meetingProcessDetection",
-  "meetingAudioDetection",
   "speakerDiarizationEnabled",
   "dictationSileroEnabled",
   "noteRecordingSileroEnabled",
@@ -374,7 +373,6 @@ export interface SettingsState
   notifyUpdates: boolean;
   gcalPrimaryOnly: boolean;
   meetingProcessDetection: boolean;
-  meetingAudioDetection: boolean;
   speakerDiarizationEnabled: boolean;
   dictationSileroEnabled: boolean;
   noteRecordingSileroEnabled: boolean;
@@ -571,7 +569,6 @@ export interface SettingsState
   setNotifyUpdates: (value: boolean) => void;
   setGcalPrimaryOnly: (value: boolean) => void;
   setMeetingProcessDetection: (value: boolean) => void;
-  setMeetingAudioDetection: (value: boolean) => void;
   setSpeakerDiarizationEnabled: (value: boolean) => void;
   setDictationSileroEnabled: (value: boolean) => void;
   setNoteRecordingSileroEnabled: (value: boolean) => void;
@@ -888,7 +885,6 @@ export const useSettingsStore = create<SettingsState>()((set, get) => ({
   })(),
   gcalPrimaryOnly: readBoolean("gcalPrimaryOnly", true),
   meetingProcessDetection: readBoolean("meetingProcessDetection", true),
-  meetingAudioDetection: readBoolean("meetingAudioDetection", true),
   speakerDiarizationEnabled: readBoolean("speakerDiarizationEnabled", true),
   dictationSileroEnabled: readBoolean("dictationSileroEnabled", true),
   noteRecordingSileroEnabled: readBoolean("noteRecordingSileroEnabled", true),
@@ -1380,7 +1376,6 @@ export const useSettingsStore = create<SettingsState>()((set, get) => ({
     if (isBrowser) window.electronAPI?.gcalSetPrimaryOnly?.(value);
   },
   setMeetingProcessDetection: createBooleanSetter("meetingProcessDetection"),
-  setMeetingAudioDetection: createBooleanSetter("meetingAudioDetection"),
   setSpeakerDiarizationEnabled: (value: boolean) => {
     if (isBrowser) localStorage.setItem("speakerDiarizationEnabled", String(value));
     useSettingsStore.setState({ speakerDiarizationEnabled: value });
@@ -1926,12 +1921,12 @@ export async function initializeSettings(): Promise<void> {
       );
     }
 
-    // Sync meeting detection preferences to main process
+    // Audio detection is derived from the meeting-notification toggle in
+    // sync-notification-preferences, so only process detection is sent here.
     try {
       const currentState = useSettingsStore.getState();
       await window.electronAPI.meetingDetectionSetPreferences?.({
         processDetection: currentState.meetingProcessDetection,
-        audioDetection: currentState.meetingAudioDetection,
       });
     } catch (err) {
       logger.warn(

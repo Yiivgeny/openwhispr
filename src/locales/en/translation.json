@@ -733,15 +733,7 @@
     "noUpcoming": "No upcoming events",
     "meetingStarting": "Meeting starting now",
     "today": "Today",
-    "tomorrow": "Tomorrow",
-    "detection": {
-      "title": "Meeting Detection",
-      "description": "Automatically detect when you're in a meeting",
-      "processDetection": "App Detection",
-      "processDescription": "Identify which app you're using when a meeting is detected",
-      "audioDetection": "Audio Detection",
-      "audioDescription": "Prompt when sustained microphone activity is detected"
-    }
+    "tomorrow": "Tomorrow"
   },
   "upcoming": {
     "title": "Upcoming Meetings",

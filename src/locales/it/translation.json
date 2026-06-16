@@ -2596,15 +2596,7 @@
     "noUpcoming": "Nessun evento in programma",
     "meetingStarting": "La riunione inizia ora",
     "today": "Oggi",
-    "tomorrow": "Domani",
-    "detection": {
-      "title": "Rilevamento Riunioni",
-      "description": "Rileva automaticamente quando sei in una riunione",
-      "processDetection": "Rilevamento Applicazioni",
-      "processDescription": "Identifica quale app stai usando quando viene rilevata una riunione",
-      "audioDetection": "Rilevamento Audio",
-      "audioDescription": "Notifica quando viene rilevata un'attività microfono prolungata"
-    }
+    "tomorrow": "Domani"
   },
   "upcoming": {
     "title": "Riunioni in programma",

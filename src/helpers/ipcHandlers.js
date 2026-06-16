@@ -7547,6 +7547,12 @@ class IPCHandlers {
             this.windowManager.notificationPrefs[k] = !!v;
           }
         }
+        // Detection only serves the notification, so the toggle also gates the detector.
+        const { notificationsEnabled, notifyMeetingDetection } =
+          this.windowManager.notificationPrefs;
+        this.meetingDetectionEngine?.setPreferences({
+          audioDetection: notificationsEnabled && notifyMeetingDetection,
+        });
         return { success: true };
       } catch (error) {
         return { success: false, error: error.message };
