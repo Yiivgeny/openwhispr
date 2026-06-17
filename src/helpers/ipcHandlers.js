@@ -6280,15 +6280,24 @@ class IPCHandlers {
         if (!Object.keys(authHeader).length) throw new Error("Not authenticated");
 
         const method = (opts.method || "GET").toUpperCase();
-        const headers = { ...authHeader };
-        const fetchOpts = { method, headers };
+        const sendWith = (header) => {
+          const headers = { ...header };
+          const fetchOpts = { method, headers };
+          if (opts.body !== undefined) {
+            headers["Content-Type"] = "application/json";
+            fetchOpts.body = JSON.stringify(opts.body);
+          }
+          return proxyFetch(`${apiUrl}${opts.path}`, fetchOpts);
+        };
 
-        if (opts.body !== undefined) {
-          headers["Content-Type"] = "application/json";
-          fetchOpts.body = JSON.stringify(opts.body);
+        let response = await sendWith(authHeader);
+
+        // A stale bearer is rejected even when the window still holds a valid session
+        // cookie; retry with the cookie alone (a tagging-along bearer overrides it).
+        if (response.status === 401 && authHeader.Authorization) {
+          const cookieHeader = await getSessionCookies(event);
+          if (cookieHeader) response = await sendWith({ Cookie: cookieHeader });
         }
-
-        const response = await proxyFetch(`${apiUrl}${opts.path}`, fetchOpts);
 
         if (response.status === 401) {
           return {
