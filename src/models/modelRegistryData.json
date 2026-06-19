@@ -1,8 +1,8 @@
 {
   "parakeetModels": {
     "parakeet-tdt-0.6b-v3": {
-      "name": "Parakeet TDT 0.6B",
-      "description": "Fast multilingual ASR with auto language detection",
+      "name": "Parakeet TDT 0.6B Fast",
+      "description": "Quantized multilingual ASR with auto language detection",
       "size": "680MB",
       "sizeMb": 680,
       "language": "multilingual",
@@ -35,7 +35,111 @@
       ],
       "downloadUrl": "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.tar.bz2",
       "extractDir": "sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8",
+      "runtimeFiles": {
+        "tokens": ["tokens.txt"],
+        "encoder": [
+          "encoder.int8.onnx",
+          {
+            "file": "encoder.onnx",
+            "requiredCompanionFiles": ["encoder.weights"]
+          }
+        ],
+        "decoder": ["decoder.int8.onnx", "decoder.onnx"],
+        "joiner": ["joiner.int8.onnx", "joiner.onnx"],
+        "requiredCompanionFiles": []
+      },
       "descriptionKey": "models.descriptions.parakeet.parakeet_tdt_0_6b_v3"
+    },
+    "parakeet-tdt-0.6b-v3-fp16": {
+      "name": "Parakeet TDT 0.6B Precise",
+      "description": "Multilingual ASR using the FP16 v3 ONNX export",
+      "size": "1.3GB",
+      "sizeMb": 1350,
+      "language": "multilingual",
+      "supportedLanguages": [
+        "bg",
+        "hr",
+        "cs",
+        "da",
+        "nl",
+        "en",
+        "et",
+        "fi",
+        "fr",
+        "de",
+        "el",
+        "hu",
+        "it",
+        "lv",
+        "lt",
+        "mt",
+        "pl",
+        "pt",
+        "ro",
+        "sk",
+        "sl",
+        "es",
+        "sv",
+        "ru",
+        "uk"
+      ],
+      "downloadUrl": "https://huggingface.co/Yiivgeny/parakeet-tdt-0.6b-v3-sherpa-onnx-fp16/resolve/main/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-fp16.tar.bz2",
+      "extractDir": "sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-fp16",
+      "runtimeFiles": {
+        "tokens": ["tokens.txt"],
+        "encoder": ["encoder.onnx"],
+        "decoder": ["decoder.onnx"],
+        "joiner": ["joiner.onnx"],
+        "requiredCompanionFiles": []
+      }
+    },
+    "parakeet-tdt-0.6b-v3-precise": {
+      "name": "Parakeet TDT 0.6B Full Precision",
+      "description": "Multilingual ASR using the FP32 v3 ONNX export",
+      "size": "2.4GB",
+      "sizeMb": 2450,
+      "language": "multilingual",
+      "supportedLanguages": [
+        "bg",
+        "hr",
+        "cs",
+        "da",
+        "nl",
+        "en",
+        "et",
+        "fi",
+        "fr",
+        "de",
+        "el",
+        "hu",
+        "it",
+        "lv",
+        "lt",
+        "mt",
+        "pl",
+        "pt",
+        "ro",
+        "sk",
+        "sl",
+        "es",
+        "sv",
+        "ru",
+        "uk"
+      ],
+      "downloadUrl": "https://huggingface.co/Yiivgeny/parakeet-tdt-0.6b-v3-sherpa-onnx-fp32/resolve/main/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-fp32.tar.bz2",
+      "extractDir": "sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-fp32",
+      "runtimeFiles": {
+        "tokens": ["tokens.txt"],
+        "encoder": [
+          {
+            "file": "encoder.onnx",
+            "requiredCompanionFiles": ["encoder.weights"]
+          }
+        ],
+        "decoder": ["decoder.onnx"],
+        "joiner": ["joiner.onnx"],
+        "requiredCompanionFiles": []
+      }
     },
     "parakeet-unified-en-0.6b": {
       "name": "Parakeet Unified EN 0.6B",
@@ -46,6 +150,13 @@
       "supportedLanguages": ["en"],
       "downloadUrl": "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-nemo-parakeet-unified-en-0.6b-int8-non-streaming.tar.bz2",
       "extractDir": "sherpa-onnx-nemo-parakeet-unified-en-0.6b-int8-non-streaming",
+      "runtimeFiles": {
+        "tokens": ["tokens.txt"],
+        "encoder": ["encoder.int8.onnx"],
+        "decoder": ["decoder.int8.onnx"],
+        "joiner": ["joiner.int8.onnx"],
+        "requiredCompanionFiles": []
+      },
       "descriptionKey": "models.descriptions.parakeet.parakeet_unified_en_0_6b"
     }
   },

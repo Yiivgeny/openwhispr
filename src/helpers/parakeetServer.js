@@ -11,6 +11,7 @@ const {
 } = require("./ffmpegUtils");
 const { getSafeTempDir } = require("./safeTempDir");
 const ParakeetWsServer = require("./parakeetWsServer");
+const { formatMissingRuntimeFiles, resolveParakeetRuntimeFiles } = require("./parakeetModelFiles");
 
 const SAMPLE_RATE = 16000;
 const BYTES_PER_SAMPLE = 4; // float32
@@ -37,22 +38,10 @@ class ParakeetServerManager {
 
   isModelDownloaded(modelName) {
     const modelDir = path.join(this.getModelsDir(), modelName);
-    const requiredFiles = [
-      "encoder.int8.onnx",
-      "decoder.int8.onnx",
-      "joiner.int8.onnx",
-      "tokens.txt",
-    ];
 
     if (!fs.existsSync(modelDir)) return false;
 
-    for (const file of requiredFiles) {
-      if (!fs.existsSync(path.join(modelDir, file))) {
-        return false;
-      }
-    }
-
-    return true;
+    return resolveParakeetRuntimeFiles(modelName, modelDir).ok;
   }
 
   async _ensureWav(audioBuffer) {
@@ -99,7 +88,14 @@ class ParakeetServerManager {
     const { wavBuffer, filesToCleanup } = await this._ensureWav(audioBuffer);
     try {
       if (!this.wsServer.ready || this.wsServer.modelName !== modelName) {
-        await this.wsServer.start(modelName, modelDir);
+        const runtimeFiles = resolveParakeetRuntimeFiles(modelName, modelDir);
+        if (!runtimeFiles.ok) {
+          throw new Error(
+            `Parakeet model "${modelName}" is missing runtime files: ` +
+              formatMissingRuntimeFiles(runtimeFiles.missing)
+          );
+        }
+        await this.wsServer.start(modelName, modelDir, runtimeFiles.files);
       }
 
       const samples = wavToFloat32Samples(wavBuffer);
@@ -173,12 +169,18 @@ class ParakeetServerManager {
     }
 
     const modelDir = path.join(this.getModelsDir(), modelName);
-    if (!this.isModelDownloaded(modelName)) {
-      return { success: false, reason: `Model "${modelName}" not downloaded` };
+    const runtimeFiles = resolveParakeetRuntimeFiles(modelName, modelDir);
+    if (!runtimeFiles.ok) {
+      return {
+        success: false,
+        reason:
+          `Model "${modelName}" not downloaded or incomplete: ` +
+          formatMissingRuntimeFiles(runtimeFiles.missing),
+      };
     }
 
     try {
-      await this.wsServer.start(modelName, modelDir);
+      await this.wsServer.start(modelName, modelDir, runtimeFiles.files);
       return { success: true, port: this.wsServer.port };
     } catch (error) {
       debugLogger.error("Failed to start parakeet WS server", { error: error.message });

@@ -88,6 +88,21 @@ export interface WhisperModelConfig {
 
 export type WhisperModelsMap = Record<string, WhisperModelInfo>;
 
+export type ParakeetRuntimeFileCandidate =
+  | string
+  | {
+      file: string;
+      requiredCompanionFiles?: string[];
+    };
+
+export interface ParakeetRuntimeFiles {
+  tokens: ParakeetRuntimeFileCandidate[];
+  encoder: ParakeetRuntimeFileCandidate[];
+  decoder: ParakeetRuntimeFileCandidate[];
+  joiner: ParakeetRuntimeFileCandidate[];
+  requiredCompanionFiles?: string[];
+}
+
 export interface ParakeetModelInfo {
   name: string;
   description: string;
@@ -97,8 +112,9 @@ export interface ParakeetModelInfo {
   language: string;
   supportedLanguages: string[];
   recommended?: boolean;
-  downloadUrl: string;
-  extractDir: string;
+  downloadUrl?: string;
+  extractDir?: string;
+  runtimeFiles?: ParakeetRuntimeFiles;
 }
 
 export type ParakeetModelsMap = Record<string, ParakeetModelInfo>;

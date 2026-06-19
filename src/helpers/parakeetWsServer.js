@@ -48,12 +48,12 @@ class ParakeetWsServer {
     return this.getWsBinaryPath() !== null;
   }
 
-  async start(modelName, modelDir) {
+  async start(modelName, modelDir, runtimeFiles) {
     if (this.startupPromise) return this.startupPromise;
     if (this.ready && this.modelName === modelName) return;
     if (this.process) await this.stop();
 
-    this.startupPromise = this._doStart(modelName, modelDir);
+    this.startupPromise = this._doStart(modelName, modelDir, runtimeFiles);
     try {
       await this.startupPromise;
     } finally {
@@ -61,22 +61,24 @@ class ParakeetWsServer {
     }
   }
 
-  async _doStart(modelName, modelDir) {
+  async _doStart(modelName, modelDir, runtimeFiles) {
     const wsBinary = this.getWsBinaryPath();
     if (!wsBinary) throw new Error("sherpa-onnx WS server binary not found");
     if (!fs.existsSync(modelDir)) throw new Error(`Model directory not found: ${modelDir}`);
+    if (!runtimeFiles) throw new Error(`Runtime files were not resolved for ${modelName}`);
 
     this.port = await findAvailablePort(PORT_RANGE_START, PORT_RANGE_END);
     this.modelName = modelName;
     this.modelDir = modelDir;
 
     const args = [
-      `--tokens=${path.join(modelDir, "tokens.txt")}`,
-      `--encoder=${path.join(modelDir, "encoder.int8.onnx")}`,
-      `--decoder=${path.join(modelDir, "decoder.int8.onnx")}`,
-      `--joiner=${path.join(modelDir, "joiner.int8.onnx")}`,
+      `--tokens=${runtimeFiles.tokens.path}`,
+      `--encoder=${runtimeFiles.encoder.path}`,
+      `--decoder=${runtimeFiles.decoder.path}`,
+      `--joiner=${runtimeFiles.joiner.path}`,
       `--port=${this.port}`,
       `--num-threads=${Math.max(1, Math.min(4, Math.floor(os.cpus().length * 0.75)))}`,
+      `--log-file=${path.join(getSafeTempDir(), `sherpa-onnx-${modelName}.log`)}`,
     ];
 
     debugLogger.debug("Starting parakeet WS server", { port: this.port, modelName, args });
@@ -84,7 +86,7 @@ class ParakeetWsServer {
     this.process = spawn(wsBinary, args, {
       stdio: ["ignore", "pipe", "pipe"],
       windowsHide: true,
-      cwd: getSafeTempDir(),
+      cwd: modelDir,
       detached: process.platform !== "win32",
     });
     sidecarPidFile.write("parakeet", this.process.pid);

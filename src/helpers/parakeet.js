@@ -12,24 +12,13 @@ const {
 } = require("./downloadUtils");
 const ParakeetServerManager = require("./parakeetServer");
 const { getModelsDirForService } = require("./modelDirUtils");
-
-const modelRegistryData = require("../models/modelRegistryData.json");
-
-function getParakeetModelConfig(modelName) {
-  const modelInfo = modelRegistryData.parakeetModels[modelName];
-  if (!modelInfo) return null;
-  return {
-    url: modelInfo.downloadUrl,
-    size: modelInfo.expectedSizeBytes || modelInfo.sizeMb * 1_000_000,
-    language: modelInfo.language,
-    supportedLanguages: modelInfo.supportedLanguages || [],
-    extractDir: modelInfo.extractDir,
-  };
-}
-
-function getValidModelNames() {
-  return Object.keys(modelRegistryData.parakeetModels);
-}
+const {
+  formatMissingRuntimeFiles,
+  getDirectorySizeSync,
+  getParakeetModelConfig,
+  getValidParakeetModelNames,
+  resolveParakeetRuntimeFiles,
+} = require("./parakeetModelFiles");
 
 class ParakeetManager {
   constructor() {
@@ -43,7 +32,7 @@ class ParakeetManager {
   }
 
   validateModelName(modelName) {
-    const validModels = getValidModelNames();
+    const validModels = getValidParakeetModelNames();
     if (!validModels.includes(modelName)) {
       throw new Error(
         `Invalid Parakeet model: ${modelName}. Valid models: ${validModels.join(", ")}`
@@ -125,15 +114,13 @@ class ParakeetManager {
       models: [],
     };
 
-    for (const modelName of getValidModelNames()) {
+    for (const modelName of getValidParakeetModelNames()) {
       const modelPath = this.getModelPath(modelName);
       if (this.serverManager.isModelDownloaded(modelName)) {
         try {
-          const encoderPath = path.join(modelPath, "encoder.int8.onnx");
-          const stats = fs.statSync(encoderPath);
           status.models.push({
             name: modelName,
-            size: `${Math.round(stats.size / (1024 * 1024))}MB`,
+            size: `${Math.round(getDirectorySizeSync(modelPath) / (1024 * 1024))}MB`,
           });
         } catch {}
       }
@@ -268,6 +255,16 @@ class ParakeetManager {
 
     if (this.serverManager.isModelDownloaded(modelName)) {
       return { model: modelName, downloaded: true, path: modelPath, success: true };
+    }
+
+    if (!modelConfig.url) {
+      return {
+        model: modelName,
+        downloaded: false,
+        success: false,
+        error: `Parakeet model "${modelName}" must be installed locally.`,
+        code: "LOCAL_INSTALL_ONLY",
+      };
     }
 
     const spaceCheck = await checkDiskSpace(modelsDir, modelConfig.size * 2.5);
@@ -411,15 +408,12 @@ class ParakeetManager {
         }
       }
 
-      const requiredFiles = [
-        "encoder.int8.onnx",
-        "decoder.int8.onnx",
-        "joiner.int8.onnx",
-        "tokens.txt",
-      ];
-      const missing = requiredFiles.filter((f) => !fs.existsSync(path.join(targetDir, f)));
-      if (missing.length > 0) {
-        throw new Error(`Extracted model is missing required files: ${missing.join(", ")}`);
+      const runtimeFiles = resolveParakeetRuntimeFiles(modelName, targetDir);
+      if (!runtimeFiles.ok) {
+        throw new Error(
+          `Extracted model is missing runtime files: ` +
+            formatMissingRuntimeFiles(runtimeFiles.missing)
+        );
       }
 
       await fsPromises.rm(extractDir, { recursive: true, force: true });
@@ -488,14 +482,13 @@ class ParakeetManager {
 
     if (this.serverManager.isModelDownloaded(modelName)) {
       try {
-        const encoderPath = path.join(modelPath, "encoder.int8.onnx");
-        const stats = fs.statSync(encoderPath);
+        const sizeBytes = getDirectorySizeSync(modelPath);
         return {
           model: modelName,
           downloaded: true,
           path: modelPath,
-          size_bytes: stats.size,
-          size_mb: Math.round(stats.size / (1024 * 1024)),
+          size_bytes: sizeBytes,
+          size_mb: Math.round(sizeBytes / (1024 * 1024)),
           success: true,
         };
       } catch {
@@ -507,7 +500,7 @@ class ParakeetManager {
   }
 
   async listParakeetModels() {
-    const models = getValidModelNames();
+    const models = getValidParakeetModelNames();
     const modelInfo = [];
 
     for (const model of models) {
@@ -527,13 +520,7 @@ class ParakeetManager {
 
     if (fs.existsSync(modelPath)) {
       try {
-        const encoderPath = path.join(modelPath, "encoder.int8.onnx");
-        let freedBytes = 0;
-
-        if (fs.existsSync(encoderPath)) {
-          const stats = fs.statSync(encoderPath);
-          freedBytes = stats.size;
-        }
+        const freedBytes = getDirectorySizeSync(modelPath);
 
         fs.rmSync(modelPath, { recursive: true, force: true });
 
@@ -567,11 +554,7 @@ class ParakeetManager {
         if (entry.isDirectory()) {
           const dirPath = path.join(modelsDir, entry.name);
           try {
-            const encoderPath = path.join(dirPath, "encoder.int8.onnx");
-            if (fs.existsSync(encoderPath)) {
-              const stats = fs.statSync(encoderPath);
-              totalFreed += stats.size;
-            }
+            totalFreed += getDirectorySizeSync(dirPath);
 
             fs.rmSync(dirPath, { recursive: true, force: true });
             deletedCount++;
